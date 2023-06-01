@@ -6,6 +6,8 @@ import { addtodo, completeTodo, deleteTodo, updateTodo } from './actions/todoAct
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './todo.css'
+import {GoPlus} from "react-icons/go"
 
 function App() {
 
@@ -22,13 +24,20 @@ function App() {
   const dispatch = useDispatch()
   return (
     <div className="App">
-    
-        <input type='text' placeholder="add task here" onChange={(e)=>setTask(e.target.value)} />
-        <button onClick={()=>dispatch(addtodo(task))}>Add Task</button>
-        <button onClick={()=>setFilter("all")}>all</button>
-        <button onClick={()=>setFilter("dome")}>done</button>
-        <button onClick={()=>setFilter("undone")}>undone</button>
-        
+    <br/>
+    <br/>
+      <h1 className='title'>Todo App</h1>
+      <br/>
+      <br/>
+           <input className='input' type='text' placeholder="add task here" onChange={(e)=>setTask(e.target.value)} />
+           <button className='add' onClick={()=>dispatch(addtodo(task))}><GoPlus/></button>
+          <br/>
+          <br/>
+          <div className='buttons'>
+           <button onClick={()=>setFilter("all")}>all</button>
+           <button onClick={()=>setFilter("dome")}>done</button>
+           <button onClick={()=>setFilter("undone")}>undone</button>
+        </div>
         
         {filter ==="all" ? todos.map(el=><div>
             <h2>{el.title}</h2>
@@ -50,22 +59,23 @@ function App() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <button onClick={()=>dispatch(deleteTodo(el.id))}>Delete</button>
-            <button onClick={()=>dispatch(completeTodo(el.id))}>{el.complete ? "done":"undone"}</button>
+
+      <button className='task' onClick={()=>dispatch(deleteTodo(el.id))}>Delete</button>
+
+            <button className='task' onClick={()=>dispatch(completeTodo(el.id))}>{el.complete ? "done":"undone"}</button>
           </div>): filter==="done" ? todos.filter(el=> el.complete===true)
           .map(el=><div>
           <h2>{el.title}</h2>
-          <button onClick={()=>dispatch(deleteTodo(el.id))}>Delete</button>
+          <button className='task'onClick={()=>dispatch(deleteTodo(el.id))}>Delete</button>
           <button onClick={()=>dispatch(completeTodo(el.id))}>{el.complete ? "done":"undone"}</button>
         </div>) : todos.filter(el=> el.complete===false)
           .map(el=><div>
           <h2>{el.title}</h2>
-          <button onClick={()=>dispatch(deleteTodo(el.id))}>Delete</button>
+          <button className='task'onClick={()=>dispatch(deleteTodo(el.id))}>Delete</button>
           <button onClick={()=>dispatch(completeTodo(el.id))}>{el.complete ? "done":"undone"}</button>
         </div>)
-
           }
-      
+    
     </div>
   );
 }
